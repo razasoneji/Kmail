@@ -20,11 +20,23 @@ const emailSchema = new mongoose.Schema(
     },
     showreceiver: {
       type: Boolean,
-      default: true, 
+      default: true,
     },
     showsender: {
       type: Boolean,
-      default: true, 
+      default: true,
+    },
+    isStarred: {
+      type: Boolean,
+      default: false,
+    },
+    isImportant: {
+      type: Boolean,
+      default: false,
+    },
+    isArchived: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }
