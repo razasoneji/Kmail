@@ -2,10 +2,27 @@
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
 import { setOpen } from "../redux/appSlice";
+import { useState } from "react";
 
 const SendMail = () => {
+  const [formData, setFormData] = useState({
+    to: "",
+    subject: "",
+    message: "",
+  });
+
   const { open } = useSelector((state) => state.app);
   const dispatch = useDispatch();
+
+  const changeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    //console.log(formData);
+    dispatch(setOpen(false));
+  };
   return (
     <div
       className={` ${
@@ -18,16 +35,38 @@ const SendMail = () => {
           <RxCross2 onClick={() => dispatch(setOpen(false))} size={"22px"} />
         </div>
       </div>
-      <form action="" className="flex flex-col p-3 gap-2">
-        <input type="text" placeholder="To" className="outline-none py-1" />
+      <form onSubmit={submitHandler} className="flex flex-col p-3 gap-2">
+        <input
+          name="to"
+          value={formData.to}
+          onChange={changeHandler}
+          type="text"
+          placeholder="To"
+          className="outline-none py-1"
+        />
         <hr />
         <input
+          name="subject"
+          value={formData.subject}
+          onChange={changeHandler}
           type="text"
           placeholder="Subject"
           className="outline-none py-1"
         />
         <hr />
-        <textarea rows={"10"} cols={"30"}></textarea>
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={changeHandler}
+          rows={"10"}
+          cols={"30"}
+        ></textarea>
+        <button
+          type="submit"
+          className="bg-blue-500 rounded-full w-fit px-5 py-1 text-white"
+        >
+          send
+        </button>
       </form>
     </div>
   );
