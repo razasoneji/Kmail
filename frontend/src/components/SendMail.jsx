@@ -1,8 +1,10 @@
 // import React from "react";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { setOpen } from "../redux/appSlice";
+import { setEmails, setOpen } from "../redux/appSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const SendMail = () => {
   const [formData, setFormData] = useState({
@@ -11,17 +13,40 @@ const SendMail = () => {
     message: "",
   });
 
-  const { open } = useSelector((state) => state.app);
+  const { open, emails } = useSelector((state) => state.app);
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: [e.target.value] });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     //console.log(formData);
     dispatch(setOpen(false));
+    {
+      for (let key in formData) {
+        formData[key] = formData[key].toString();
+      }
+    }
+    console.log(formData);
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/v1/email/create",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(setEmails([...emails, res.data.email]));
+      //console.log(res.data.email);
+    } catch (error) {
+      console.log(error.message);
+      toast.error(error.response.data.message);
+    }
   };
   return (
     <div

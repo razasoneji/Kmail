@@ -1,12 +1,16 @@
+/* eslint-disable react/prop-types */
 // import React from "react";
 import { MdCropSquare, MdOutlineStarBorder } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setSelectedEmail } from "../redux/appSlice";
 
-const Email = () => {
+const Email = ({ email }) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const openMail = () => {
-    navigate("/mail/12");
+    dispatch(setSelectedEmail(email));
+    navigate(`/mail/${email._id}`);
   };
 
   return (
@@ -22,14 +26,11 @@ const Email = () => {
           <MdOutlineStarBorder size={"22px"} />
         </div>
         <div>
-          <h1 className="font-semibold">Sahil Vora</h1>
+          <h1 className="font-semibold">{email?.subject}</h1>
         </div>
       </div>
       <div className="flex-1 ml-4">
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita
-          laudantium corrupti molestias.
-        </p>
+        <p>{email?.message}</p>
       </div>
       <div className="flex-none text-sm text-gray">
         <p>12 days ago</p>
