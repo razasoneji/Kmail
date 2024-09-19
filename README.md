@@ -19,7 +19,6 @@ This project is a **Gmail clone** built using the MERN stack (MongoDB, Express.j
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB (Mongoose ORM)
 - **Authentication**: JSON Web Tokens (JWT)
-- **Mail Service**: Nodemailer or custom backend logic to simulate email sending
 
 ## Getting Started
 
