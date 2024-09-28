@@ -33,7 +33,17 @@ const Email = ({ email }) => {
         <p>{email?.message}</p>
       </div>
       <div className="flex-none text-sm text-gray">
-        <p>12 days ago</p>
+        {email?.createdAt ? (
+          (() => {
+            const cre = new Date(email.createdAt);
+            const now = new Date();
+            const timeDifference = now - cre;
+            const daysAgo = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+            return <p>{daysAgo} days ago</p>;
+          })()
+        ) : (
+          <p>Date not available</p>
+        )}
       </div>
     </div>
   );
