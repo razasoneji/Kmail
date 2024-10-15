@@ -25,6 +25,47 @@ export const createEmail = async (req, res) => {
     console.log(error);
   }
 };
+// export const deleteEmail = async (req, res) => {
+//   try {
+//     const emailId = req.params.id;
+//     const userId = req.id;
+
+//     // Validate the provided emailId
+//     if (!emailId) {
+//       return res.status(400).json({ message: "Email ID is required" });
+//     }
+
+//     // Find the email by ID
+//     const email = await Email.findById(emailId);
+//     if (!email) {
+//       return res.status(404).json({ message: "Email not found" });
+//     }
+
+//     // Find the user by ID
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     // Check if the user is authorized to delete the email
+//     if (email.userId.toString() !== userId.toString()) {
+//       return res
+//         .status(403)
+//         .json({ message: "You are not authorized to delete this email" });
+//     }
+
+//     // Delete the email
+//     await Email.findByIdAndDelete(emailId);
+
+//     // Return a success message
+//     return res.status(200).json({
+//       message: "Email deleted successfully",
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: "Server error" });
+//   }
+// };
 
 export const deleteEmail = async (req, res) => {
   try {
@@ -67,33 +108,13 @@ export const deleteEmail = async (req, res) => {
     if (isModified) {
       await email.save();
       return res.status(200).json({
-        message: "Email visibility updated",
+        message: "Email Deleted Successfully",
       });
     }
 
     return res
       .status(403)
       .json({ message: "You are not authorized to delete this email" });
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ message: "Server error" });
-  }
-};
-
-export const getAllEmailById = async (req, res) => {
-  try {
-    const userId = req.id;
-
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    const emails = await Email.find({
-      $or: [{ to: user.email }, { userId: userId }],
-    });
-
-    return res.status(200).json({ emails });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });
@@ -115,6 +136,50 @@ export const getReceivedEmails = async (req, res) => {
     });
 
     return res.status(200).json({ receivedEmails });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+//   export const getAllEmailById = async (req, res) => {
+//   try {
+//     const userId = req.id;
+
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: "User not found" });
+//     }
+
+//     const emails = await Email.find({
+//       $or: [{ to: user.email }, { userId: userId }],
+//     });
+
+//     return res.status(200).json({ emails });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({ message: "Server error" });
+//   }
+// };
+export const getAllEmailById = async (req, res) => {
+  try {
+    const userId = req.id;
+
+    // Find the user by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Fetch emails that the user is authorized to see
+    const emails = await Email.find({
+      $or: [
+        { to: user.email, showreceiver: true }, // Emails sent to the user and visible to them
+        { userId: userId, showsender: true }, // Emails sent by the user and visible to them
+      ],
+    });
+
+    return res.status(200).json({ emails });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: "Server error" });

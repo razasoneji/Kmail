@@ -11,7 +11,6 @@ import {
   MdOutlineMarkEmailUnread,
   MdOutlineReport,
   MdOutlineWatchLater,
-  MdPersonAddAlt1,
 } from "react-icons/md";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -30,6 +29,7 @@ const Mail = () => {
           withCredentials: true,
         }
       );
+      console.log(res.data.message);
       toast.success(res.data.message);
       navigate("/");
     } catch (error) {
