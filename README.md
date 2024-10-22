@@ -127,6 +127,39 @@ frontend/
 
 10. **Get All Emails by User ID**
     - `GET /api/emails/user/:id`
+   
+# Component Documentation
+
+## 1. Body
+- **Description**: Manages the main layout of the application, checking user authentication and rendering the sidebar and outlet for nested routes.
+
+## 2. Email
+- **Description**: Displays individual email details, including subject, message, and time since creation, and navigates to the mail view when clicked.
+
+## 3. Emails
+- **Description**: Fetches and filters the list of emails based on search input, rendering a list of `Email` components.
+
+## 4. Inbox
+- **Description**: Displays the inbox layout with mail categories and integrates the `Emails` component for showing filtered emails.
+
+## 5. Login
+- **Description**: Provides a login form for user authentication, managing input state and handling the submission to log users in.
+
+## 6. Mail
+- **Description**: Displays the details of a selected email, allowing users to perform actions like deleting the email and providing navigation back to the inbox.
+
+## 7. Navbar
+- **Description**: Contains the application logo, search bar for email queries, and user settings options, including a logout feature, which updates the application state accordingly.
+
+## 8. SendMail
+- **Description**: Renders a form for composing a new email, managing input state and handling submission to send the email, while updating the email list in the Redux store.
+
+## 9. Sidebar
+- **Description**: Displays a navigation sidebar with options for different email categories and a button to compose new emails, enhancing user interaction and navigation within the application.
+
+## 10. Signup
+- **Description**: Provides a registration form for new users, managing input state and handling form submission to register the user, followed by navigation to the login page upon successful registration.
+
 
 
 
