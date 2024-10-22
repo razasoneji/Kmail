@@ -29,7 +29,7 @@ const SendMail = () => {
         formData[key] = formData[key].toString();
       }
     }
-    console.log(formData);
+
     try {
       const res = await axios.post(
         "http://localhost:8080/api/v1/email/create",
@@ -43,6 +43,12 @@ const SendMail = () => {
       );
       dispatch(setEmails([...emails, res.data.email]));
       //console.log(res.data.email);
+      toast.success("Email sent successfully!");
+      setFormData({
+        to: "",
+        subject: "",
+        message: "",
+      });
     } catch (error) {
       console.log(error.message);
       toast.error(error.response.data.message);

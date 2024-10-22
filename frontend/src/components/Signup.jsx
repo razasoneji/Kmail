@@ -28,7 +28,6 @@ const Signup = () => {
         }
       );
       if (response.data.success) {
-        //alert("Registration Successfull");
         navigate("/login");
         toast.success(response.data.message);
       }

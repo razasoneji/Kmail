@@ -10,6 +10,18 @@ export const createEmail = async (req, res) => {
         .status(400)
         .json({ message: "All fields are required", success: false });
 
+    const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!emailRegex.test(to)) {
+      return res
+        .status(400)
+        .json({ message: "Invalid email address format", success: false });
+    }
+    const user = await User.findOne({ email: to });
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "Email address does not exist", success: false });
+    }
     const email = await Email.create({
       to,
       subject,
@@ -90,6 +102,7 @@ export const deleteEmail = async (req, res) => {
 
     if (email.userId.toString() === userId.toString()) {
       email.showsender = false;
+      email.showreceiver = false;
       isModified = true;
     }
 
