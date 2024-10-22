@@ -95,6 +95,188 @@ frontend/
    cd ../frontend
    npm run dev
 
+   # API Endpoints
+
+## User Authentication
+
+### 1. Register User
+- **Endpoint:** `POST /api/users/register`
+- **Request Body:**
+    ```json
+    {
+        "fullname": "User Name",
+        "email": "user@example.com",
+        "password": "yourpassword"
+    }
+    ```
+- **Response:**
+    - **201 Created**: 
+        ```json
+        {
+            "message": "Account created successfully.",
+            "success": true
+        }
+        ```
+    - **400 Bad Request**: 
+        ```json
+        {
+            "message": "All fields are required",
+            "success": false
+        }
+        ```
+
+### 2. Login User
+- **Endpoint:** `POST /api/users/login`
+- **Request Body:**
+    ```json
+    {
+        "email": "user@example.com",
+        "password": "yourpassword"
+    }
+    ```
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "message": "User Name logged in successfully.",
+            "user": { ... },
+            "success": true
+        }
+        ```
+    - **401 Unauthorized**: 
+        ```json
+        {
+            "message": "Incorrect email or password",
+            "success": false
+        }
+        ```
+
+### 3. Logout User
+- **Endpoint:** `POST /api/users/logout`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "message": "logged out successfully."
+        }
+        ```
+
+### 4. Get User Details
+- **Endpoint:** `GET /api/users/:id`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "user": { ... }
+        }
+        ```
+    - **404 Not Found**: 
+        ```json
+        {
+            "message": "User not found"
+        }
+        ```
+
+### 5. Update User
+- **Endpoint:** `PUT /api/users/update`
+- **Request Body:**
+    ```json
+    {
+        "fullname": "New User Name",
+        "currentPassword": "oldpassword",
+        "newPassword": "newpassword"
+    }
+    ```
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "message": "User updated successfully",
+            "success": true
+        }
+        ```
+    - **401 Unauthorized**: 
+        ```json
+        {
+            "message": "Current password is incorrect",
+            "success": false
+        }
+        ```
+
+## Email Management
+
+### 6. Create Email
+- **Endpoint:** `POST /api/emails`
+- **Request Body:**
+    ```json
+    {
+        "to": "recipient@example.com",
+        "subject": "Email Subject",
+        "message": "Email message content"
+    }
+    ```
+- **Response:**
+    - **201 Created**: 
+        ```json
+        {
+            "email": { ... }
+        }
+        ```
+    - **400 Bad Request**: 
+        ```json
+        {
+            "message": "All fields are required",
+            "success": false
+        }
+        ```
+
+### 7. Delete Email
+- **Endpoint:** `DELETE /api/emails/:id`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "message": "Email deleted successfully"
+        }
+        ```
+    - **404 Not Found**: 
+        ```json
+        {
+            "message": "Email not found"
+        }
+        ```
+
+### 8. Get Received Emails
+- **Endpoint:** `GET /api/emails/received`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "receivedEmails": [ ... ]
+        }
+        ```
+
+### 9. Get Sent Emails
+- **Endpoint:** `GET /api/emails/sent`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "sentEmails": [ ... ]
+        }
+        ```
+
+### 10. Get All Emails by User ID
+- **Endpoint:** `GET /api/emails/user/:id`
+- **Response:**
+    - **200 OK**: 
+        ```json
+        {
+            "emails": [ ... ]
+        }
+        ```
+
+
 ## Class Diagram
 ![class_diagram](https://github.com/user-attachments/assets/fc2f39ef-af42-46d8-868d-2e0e084b467e)
 
