@@ -98,7 +98,8 @@ frontend/
 ## Class Diagram
 ![class_diagram](https://github.com/user-attachments/assets/fc2f39ef-af42-46d8-868d-2e0e084b467e)
 
-### ScreenShots
+
+## SCREENSHOTS
 ![login](https://github.com/user-attachments/assets/94c50543-5126-40a5-92cd-a90f28c86c4a)
 
 
